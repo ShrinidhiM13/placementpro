@@ -14,3 +14,6 @@ echo json_encode([
     "success" => true,
     "message" => "PlacementPro API Running 🚀"
 ]);
+
+ini_set("log_errors", 1);
+ini_set("error_log", __DIR__ . "/logs/error.log");
