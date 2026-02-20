@@ -126,7 +126,7 @@ placementpro/
 
 ---
 
-## 🔐 Authentication Flow
+##  Authentication Flow
 
 ### 1. **Registration**
 ```
@@ -158,7 +158,7 @@ Redirect to login screen
 
 ---
 
-## 📊 Database Schema (Key Tables)
+##  Database Schema (Key Tables)
 
 ### users table
 ```
@@ -547,7 +547,7 @@ WHERE slot_id = 42;
 
 ---
 
-## 📝 Code Standards
+##  Code Standards
 
 ### Naming Convention
 ```javascript
@@ -658,7 +658,7 @@ function apiCall(endpoint, method, data, callback) {
 
 ---
 
-## 📋 File Checklist
+##  File Checklist
 
 ### Core Files (Must Exist)
 - [x] `public/index.html` - Main page

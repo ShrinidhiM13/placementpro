@@ -60,50 +60,50 @@ function initDashboard() {
 
   if(role === "STUDENT"){
     menu.innerHTML = `
-      <div onclick="showStudentDrives()">📋 Drives</div>
-      <div onclick="showMyApplications()">📝 My Applications</div>
-      <div onclick="showInterviewSlots()">📅 My Interviews</div>
-      <div onclick="showMentorSlots()">👨‍🏫 Book Mentorship</div>
-      <div onclick="showStudentSkills()">🎯 Skills</div>
-      <div onclick="showStudentProjects()">💻 Projects</div>
-      <div onclick="showStudentEducation()">🎓 Education</div>
-      <div onclick="showStudentCertifications()">📜 Certifications</div>
-      <div onclick="showJobPosts()">💼 Job Posts</div>
-      <div onclick="showSkillGapAnalysis()">📊 Skill Gap</div>
-      <div onclick="showGenerateResume()">📄 Generate Resume</div>
-      <div onclick="showNotifications()">🔔 Notifications</div>
-      <div onclick="showProfile()">👤 Profile</div>
-      <div onclick="showChangePassword()">🔐 Password</div>
-      <div onclick="logout()">🚪 Logout</div>
+      <div onclick="showStudentDrives()">Drives</div>
+      <div onclick="showMyApplications()"> My Applications</div>
+      <div onclick="showInterviewSlots()"> My Interviews</div>
+      <div onclick="showMentorSlots()">Book Mentorship</div>
+      <div onclick="showStudentSkills()"> Skills</div>
+      <div onclick="showStudentProjects()"> Projects</div>
+      <div onclick="showStudentEducation()"> Education</div>
+      <div onclick="showStudentCertifications()">Certifications</div>
+      <div onclick="showJobPosts()">Job Posts</div>
+      <div onclick="showSkillGapAnalysis()"> Skill Gap</div>
+      <div onclick="showGenerateResume()"> Generate Resume</div>
+      <div onclick="showNotifications()"> Notifications</div>
+      <div onclick="showProfile()"> Profile</div>
+      <div onclick="showChangePassword()"> Password</div>
+      <div onclick="logout()"> Logout</div>
     `;
     showStudentDrives();
   }
 
   if(role === "ALUMNI"){
     menu.innerHTML = `
-      <div onclick="showAlumniDashboard()">📊 Dashboard</div>
-      <div onclick="showMyJobPosts()">💼 My Job Posts</div>
-      <div onclick="showCreateJobPost()">➕ Post Job</div>
-      <div onclick="showAlumniMentorSlots()">👨‍🏫 Mentorship Slots</div>
-      <div onclick="showCreateMentorSlot()">➕ Create Slot</div>
-      <div onclick="showProfile()">👤 Profile</div>
-      <div onclick="showChangePassword()">🔐 Password</div>
-      <div onclick="logout()">🚪 Logout</div>
+      <div onclick="showAlumniDashboard()"> Dashboard</div>
+      <div onclick="showMyJobPosts()"> My Job Posts</div>
+      <div onclick="showCreateJobPost()">Post Job</div>
+      <div onclick="showAlumniMentorSlots()"> Mentorship Slots</div>
+      <div onclick="showCreateMentorSlot()"> Create Slot</div>
+      <div onclick="showProfile()">Profile</div>
+      <div onclick="showChangePassword()"> Password</div>
+      <div onclick="logout()"> Logout</div>
     `;
     showAlumniDashboard();
   }
 
   if(role === "TPO"){
     menu.innerHTML = `
-      <div onclick="showTpoDashboard()">📊 Dashboard</div>
-      <div onclick="showCreateDrive()">➕ Create Drive</div>
-      <div onclick="showManageDrives()">🎯 Manage Drives</div>
-      <div onclick="showTpoApplications()">📋 Applications</div>
-      <div onclick="showEligibleStudents()">👥 Eligible Students</div>
-      <div onclick="showScheduleInterview()">📅 Schedule Interviews</div>
-      <div onclick="showPlacementStats()">📊 Analytics</div>
-      <div onclick="showChangePassword()">🔐 Password</div>
-      <div onclick="logout()">🚪 Logout</div>
+      <div onclick="showTpoDashboard()"> Dashboard</div>
+      <div onclick="showCreateDrive()"> Create Drive</div>
+      <div onclick="showManageDrives()"> Manage Drives</div>
+      <div onclick="showTpoApplications()"> Applications</div>
+      <div onclick="showEligibleStudents()"> Eligible Students</div>
+      <div onclick="showScheduleInterview()"> Schedule Interviews</div>
+      <div onclick="showPlacementStats()"> Analytics</div>
+      <div onclick="showChangePassword()"> Password</div>
+      <div onclick="logout()"> Logout</div>
     `;
     showTpoDashboard();
   }
@@ -142,7 +142,7 @@ async function showStudentDrives(){
   const res = await fetch("../api/common/drives.php");
   const data = await res.json();
 
-  let html = "<h2>📋 Open Drives</h2>";
+  let html = "<h2> Open Drives</h2>";
   
   if(!data.data || data.data.length === 0) {
     html += "<p>No drives available</p>";
@@ -197,7 +197,7 @@ async function showMyApplications(){
 
   const data = await res.json();
 
-  let html = "<h2>📝 My Applications</h2>";
+  let html = "<h2> My Applications</h2>";
   
   if(!data.success || !data.data || data.data.length === 0) {
     html += "<p>No applications yet</p>";
@@ -285,7 +285,7 @@ async function showStudentSkills(){
 
   const data = await res.json();
 
-  let html = "<h2>🎯 My Skills</h2>";
+  let html = "<h2> My Skills</h2>";
   html += `
     <div class="card">
       <h3>Add New Skill</h3>
@@ -370,7 +370,7 @@ async function showStudentProjects(){
 
   const data = await res.json();
 
-  let html = "<h2>💻 My Projects</h2>";
+  let html = "<h2> My Projects</h2>";
   html += `
     <div class="card">
       <h3>Add New Project</h3>
@@ -464,7 +464,7 @@ async function showStudentEducation(){
 
   const data = await res.json();
 
-  let html = "<h2>🎓 Education</h2>";
+  let html = "<h2> Education</h2>";
   html += `
     <div class="card">
       <h3>Add Education</h3>
@@ -558,7 +558,7 @@ async function showStudentCertifications(){
 
   const data = await res.json();
 
-  let html = "<h2>📜 Certifications</h2>";
+  let html = "<h2> Certifications</h2>";
   html += `
     <div class="card">
       <h3>Add Certification</h3>
@@ -649,7 +649,7 @@ async function showInterviewSlots(){
 
   const data = await res.json();
 
-  let html = "<h2>📅 My Interview Slots</h2>";
+  let html = "<h2> My Interview Slots</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='grid'>";
@@ -755,7 +755,7 @@ async function showJobPosts(){
 
   const data = await res.json();
 
-  let html = "<h2>💼 Job Posts from Alumni</h2>";
+  let html = "<h2> Job Posts from Alumni</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='grid'>";
@@ -766,8 +766,8 @@ async function showJobPosts(){
           <p><strong>Posted by:</strong> ${job.alumniName || 'Anonymous'}</p>
           <p class="secondary">${job.company || 'Company Name'}</p>
           <p><strong>Description:</strong> ${job.description}</p>
-          <p class="secondary">📧 ${job.alumniEmail}</p>
-          <p class="secondary">📞 ${job.alumniPhone || 'N/A'}</p>
+          <p class="secondary"> ${job.alumniEmail}</p>
+          <p class="secondary"> ${job.alumniPhone || 'N/A'}</p>
         </div>
       `;
     });
@@ -788,7 +788,7 @@ async function showSkillGapAnalysis(){
 
   const data = await res.json();
 
-  let html = "<h2>📊 Skill Gap Analysis</h2>";
+  let html = "<h2> Skill Gap Analysis</h2>";
 
   if(data.success && data.data) {
     const analysis = data.data;
@@ -812,7 +812,7 @@ async function showGenerateResume(){
   const token = localStorage.getItem("token");
 
   document.getElementById("content").innerHTML = `
-    <h2>📄 Generate Resume</h2>
+    <h2> Generate Resume</h2>
     <div class="card">
       <p>Click the button below to generate and download your resume as PDF.</p>
       <button onclick="generatePDF()" class="btn-primary">Download Resume as PDF</button>
@@ -847,7 +847,7 @@ async function showNotifications(){
 
   const data = await res.json();
 
-  let html = "<h2>🔔 Notifications</h2>";
+  let html = "<h2> Notifications</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='notifications-list'>";
@@ -884,7 +884,7 @@ async function showProfile(){
   const profile = data.data;
 
   document.getElementById("content").innerHTML = `
-    <h2>👤 My Profile</h2>
+    <h2> My Profile</h2>
 
     <div class="card">
       ${profile.profileImage ? 
@@ -942,7 +942,7 @@ async function updateProfile(event) {
 
 function showChangePassword(){
   document.getElementById("content").innerHTML = `
-    <h2>🔐 Change Password</h2>
+    <h2> Change Password</h2>
 
     <div class="card">
       <form id="passwordForm">
@@ -1018,7 +1018,7 @@ async function showAlumniDashboard(){
   const bookedCount = mentorData.data ? mentorData.data.filter(s => s.isBooked).length : 0;
 
   let html = `
-    <h2>📊 Alumni Dashboard</h2>
+    <h2> Alumni Dashboard</h2>
     <div class="stats-grid">
       <div class="stat-card">
         <h3>${jobCount}</h3>
@@ -1048,7 +1048,7 @@ async function showMyJobPosts(){
 
   const data = await res.json();
 
-  let html = "<h2>💼 My Job Posts</h2>";
+  let html = "<h2> My Job Posts</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='grid'>";
@@ -1072,7 +1072,7 @@ async function showMyJobPosts(){
 
 async function showCreateJobPost(){
   document.getElementById("content").innerHTML = `
-    <h2>➕ Create Job Post</h2>
+    <h2> Create Job Post</h2>
 
     <div class="card">
       <form id="jobPostForm">
@@ -1185,7 +1185,7 @@ async function showAlumniMentorSlots(){
 
 async function showCreateMentorSlot(){
   document.getElementById("content").innerHTML = `
-    <h2>➕ Create Mentorship Slot</h2>
+    <h2> Create Mentorship Slot</h2>
 
     <div class="card">
       <h3>Schedule Your Availability</h3>
@@ -1286,7 +1286,7 @@ async function showTpoDashboard(){
   const stats = statsData.data || {};
 
   let html = `
-    <h2>📊 TPO Dashboard</h2>
+    <h2> TPO Dashboard</h2>
     <div class="stats-grid">
       <div class="stat-card">
         <h3>${drives}</h3>
@@ -1320,7 +1320,7 @@ async function showTpoDashboard(){
 
 function showCreateDrive(){
   document.getElementById("content").innerHTML = `
-    <h2>➕ Create Drive</h2>
+    <h2> Create Drive</h2>
 
     <div class="card">
       <form id="createDriveForm" enctype="multipart/form-data">
@@ -1381,7 +1381,7 @@ async function showManageDrives(){
   const res = await fetch("../api/common/drives.php");
   const data = await res.json();
 
-  let html = "<h2>🎯 Manage Drives</h2>";
+  let html = "<h2> Manage Drives</h2>";
 
   if(!data.data || data.data.length === 0) {
     html += "<p>No drives created yet</p>";
@@ -1500,7 +1500,7 @@ async function showTpoApplications(){
 
   const data = await res.json();
 
-  let html = `<h2>📋 Applications Management</h2>`;
+  let html = `<h2> Applications Management</h2>`;
 
   if(!data.data || data.data.length === 0) {
     html += "<p>No applications</p>";
@@ -1651,7 +1651,7 @@ async function showScheduleInterview(){
   }
 
   document.getElementById("content").innerHTML = `
-    <h2>📅 Schedule Interview Slots</h2>
+    <h2> Schedule Interview Slots</h2>
 
     <div class="card">
       <form id="scheduleForm">
@@ -1714,7 +1714,7 @@ async function showPlacementStats(){
 
   const data = await res.json();
 
-  let html = "<h2>📊 Placement Statistics</h2>";
+  let html = "<h2> Placement Statistics</h2>";
 
   if(data.success && data.data) {
     const stats = data.data;

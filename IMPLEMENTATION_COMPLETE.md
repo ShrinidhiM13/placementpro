@@ -5,46 +5,46 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ---
 
-## 🎯 Features Implemented
+##  Features Implemented
 
 ### **STUDENT FEATURES**
 
-1. **📋 Drives**
+1. ** Drives**
    - View all open placement drives
    - Apply to drives
    - Filter by company, CGPA requirements, and backlogs
 
-2. **📝 My Applications**
+2. ** My Applications**
    - View all submitted applications
    - Check application status (APPLIED, APTITUDE, CLEARED, INTERVIEW_SCHEDULED, SELECTED, REJECTED)
    - Track applied date and current status
 
-3. **🎯 Skills Management**
+3. ** Skills Management**
    - Add new skills
    - View all skills
    - Remove skills from profile
    - Skills are used for gap analysis and matching
 
-4. **💻 Projects**
+4. ** Projects**
    - Add projects with title, description, tech stack
    - View all projects
    - Edit project details
    - Delete projects
    - Showcase technical work
 
-5. **🎓 Education**
+5. ** Education**
    - Add education records (degree, institute, year, CGPA)
    - View education history
    - Delete duplicate or incorrect records
    - Support for multiple education entries
 
-6. **📜 Certifications**
+6. ** Certifications**
    - Add certifications (AWS, Google, Oracle, etc.)
    - View all certifications
    - Delete certifications
    - Display issuer and year
 
-7. **📅 Interview Slots**
+7. ** Interview Slots**
    - View available interview slots
    - Book interview slots for applied drives
    - Get auto-updated with interview details
@@ -54,34 +54,34 @@ PlacementPro is a comprehensive placement management system with full UI and bac
    - Book mentoring sessions with experienced alumni
    - Get guidance from seniors in industry
 
-9. **💼 Job Posts**
+9. ** Job Posts**
    - View job posts from alumni
    - See alumni contact information
    - Direct career opportunities
 
-10. **📊 Skill Gap Analysis**
+10. ** Skill Gap Analysis**
     - AI-powered skill analysis
     - Compare your skills with placed students
     - Get personalized recommendations
     - Improve placement chances
 
-11. **📄 Generate Resume**
+11. ** Generate Resume**
     - Auto-generate professional resume in PDF
     - Includes education, skills, and projects
     - Download and share with companies
 
-12. **🔔 Notifications**
+12. ** Notifications**
     - Receive placement notifications
     - Track important updates
     - See notification history
 
-13. **👤 Profile Management**
+13. ** Profile Management**
     - View and edit profile details
     - Update CGPA and backlogs
     - Upload profile picture
     - Phone number and contact info
 
-14. **🔐 Change Password**
+14. ** Change Password**
     - Change account password
     - Secure password update mechanism
 
@@ -89,7 +89,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ### **ALUMNI FEATURES**
 
-1. **💼 Create Job Posts**
+1. ** Create Job Posts**
    - Post job opportunities
    - Share job descriptions
    - Help students find opportunities
@@ -100,7 +100,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
    - View booking status (available/booked)
    - Provide guidance to students
 
-3. **📋 View My Job Posts**
+3. ** View My Job Posts**
    - See all posted jobs
    - Track posts
 
@@ -108,20 +108,20 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ### **TPO (ADMIN) FEATURES**
 
-1. **➕ Create Drive**
+1. ** Create Drive**
    - Create new placement drives
    - Set company name and job title
    - Define eligibility criteria (Min CGPA, max backlogs)
    - Upload drive image
    - Set drive status (OPEN/CLOSED)
 
-2. **🎯 Manage Drives**
+2. ** Manage Drives**
    - Edit existing drives
    - Update drive details
    - Delete drives
    - Change drive status
 
-3. **📋 Applications Management**
+3. ** Applications Management**
    - View all student applications
    - Update application status
    - Track APPLIED → APTITUDE → CLEARED → INTERVIEW → SELECTED/REJECTED
@@ -137,13 +137,13 @@ PlacementPro is a comprehensive placement management system with full UI and bac
    - Custom notification messages
    - Bulk notification capability
 
-6. **📅 Schedule Interview**
+6. ** Schedule Interview**
    - Create interview slots
    - Set room and time
    - Prevent time overlaps
    - Link to specific drives
 
-7. **📊 Placement Analytics**
+7. ** Placement Analytics**
    - Total students count
    - Placed vs Unplaced students
    - Placement percentage
@@ -277,7 +277,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ---
 
-## 🔐 Security Features
+##  Security Features
 
 1. **JWT Authentication** - Token-based authentication
 2. **Role-Based Access Control** - Three roles: Student, Alumni, TPO
@@ -288,7 +288,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ---
 
-## 📊 Key Metrics
+##  Key Metrics
 
 - **Total Database Tables**: 17
 - **API Endpoints**: 40+
@@ -308,7 +308,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ---
 
-## 🎓 Use Cases
+##  Use Cases
 
 ### For Students
 - Register and create profile
@@ -335,7 +335,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ---
 
-## 📝 Notes
+##  Notes
 
 - All timestamps use ISO 8601 format
 - Pagination can be added to list endpoints
@@ -345,7 +345,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ---
 
-## 🎯 Future Enhancements
+##  Future Enhancements
 
 1. Email notifications
 2. SMS alerts
@@ -360,7 +360,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
 
 ---
 
-## 📞 Support
+##  Support
 
 For issues or questions, refer to the SQL schema and API documentation above.
 

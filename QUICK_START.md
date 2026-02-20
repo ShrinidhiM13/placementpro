@@ -42,7 +42,7 @@ http://localhost/placementpro
 
 ---
 
-## 👤 Test Accounts
+##  Test Accounts
 
 ### Student Account
 - Email: student@example.com
@@ -63,7 +63,7 @@ http://localhost/placementpro
 
 ---
 
-## 📋 Database Tables
+##  Database Tables
 
 ### Core Tables
 - `users` - Authentication and basic user info
@@ -361,7 +361,7 @@ memory_limit = 128M
 
 ---
 
-## 📞 Support Resources
+##  Support Resources
 
 - Check API endpoint comments for request/response format
 - Review SQL schema for data validation rules

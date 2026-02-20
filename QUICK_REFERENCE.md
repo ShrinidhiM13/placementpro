@@ -1,6 +1,6 @@
 # PlacementPro - Quick Reference Card
 
-## 🎯 Quick Navigation
+##  Quick Navigation
 
 | Role | Dashboard Path | Key Features |
 |------|---|---|
@@ -95,7 +95,7 @@ PUT  /api/tpo/updateApplicationStatus.php
 
 ---
 
-## 📝 JavaScript Main Functions
+##  JavaScript Main Functions
 
 ### Authentication
 ```javascript
@@ -143,7 +143,7 @@ showPlacementStats()                // Analytics dashboard
 
 ---
 
-## 🔐 Authorization Header
+##  Authorization Header
 
 All API requests must include:
 ```javascript
@@ -155,7 +155,7 @@ headers: {
 
 ---
 
-## 📊 Database Tables (Key Fields)
+##  Database Tables (Key Fields)
 
 ### users
 ```
@@ -184,7 +184,7 @@ post_id, alumni_id, title, company, description, salary, location
 
 ---
 
-## 🎯 Status Values
+##  Status Values
 
 **Application Status**:
 ```
@@ -246,7 +246,7 @@ require_once('../config/middleware.php');
 
 ---
 
-## 📋 Checklist: Before Deploying
+##  Checklist: Before Deploying
 
 - [ ] All 35+ API endpoints exist and tested
 - [ ] app.js loads without console errors
@@ -296,7 +296,7 @@ require_once('../config/middleware.php');
 
 ---
 
-## 📞 Support References
+##  Support References
 
 ### JavaScript Issues
 - Check browser console (F12 → Console tab)
@@ -324,7 +324,7 @@ require_once('../config/middleware.php');
 
 ---
 
-## 🎯 Feature Completion Status
+##  Feature Completion Status
 
 | Feature | Student | Alumni | TPO | Status |
 |---------|---------|--------|-----|--------|
@@ -384,7 +384,7 @@ git push origin feature/student-dashboard
 
 ---
 
-## 📊 Performance Metrics (Target)
+##  Performance Metrics (Target)
 
 - Page Load Time: < 2 seconds
 - API Response Time: < 500ms

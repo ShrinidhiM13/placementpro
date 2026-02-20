@@ -1,6 +1,6 @@
 # PlacementPro - Complete Dashboard Implementation Guide
 
-## 🎯 Overview
+##  Overview
 
 The PlacementPro system now includes complete, fully functional dashboards for three user roles:
 1. **STUDENT** - Apply for drives, manage profile, book interviews/mentorships
@@ -9,24 +9,24 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 
 ---
 
-## 👨‍🎓 STUDENT DASHBOARD
+## 👨‍ STUDENT DASHBOARD
 
 ### Features Available
 
-#### 1. **📋 Drives**
+#### 1. ** Drives**
 - View all open placement drives
 - Check minimum CGPA and backlog requirements
 - Apply to drives (system validates eligibility)
 - See drive status (OPEN/CLOSED)
 
-#### 2. **📝 My Applications**
+#### 2. ** My Applications**
 - View all submitted applications
 - See current status of each application
 - Track application submission date
 - **Delete applications** (if needed)
 - View status details and remarks from TPO
 
-#### 3. **📅 My Interviews**
+#### 3. ** My Interviews**
 - View interview slots for applied drives
 - See interview time and location
 - Book interview slots
@@ -38,103 +38,103 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - Book mentorship sessions (if available)
 - Check booking status
 
-#### 5. **🎯 Skills**
+#### 5. ** Skills**
 - Add new skills by name
 - View all current skills as tags
 - Remove skills as needed
 - Skills are visible to companies and used for matching
 
-#### 6. **💻 Projects**
+#### 6. ** Projects**
 - Add projects with title, description, tech stack
 - View all portfolio projects
 - Delete projects
 - Showcase technical work to employers
 
-#### 7. **🎓 Education**
+#### 7. ** Education**
 - Add education records (degree, institute, year, CGPA)
 - View full education history
 - Delete outdated records
 - Support for multiple education entries
 
-#### 8. **📜 Certifications**
+#### 8. ** Certifications**
 - Add professional certifications (AWS, Google, etc.)
 - See issuer and year of certification
 - Delete certifications
 - Highlight technical qualifications
 
-#### 9. **💼 Job Posts**
+#### 9. ** Job Posts**
 - View job opportunities posted by alumni
 - See alumni contact information
 - Direct networking opportunities
 - Find jobs through alumni network
 
-#### 10. **📊 Skill Gap Analysis**
+#### 10. ** Skill Gap Analysis**
 - AI-powered skill comparison
 - See your skills vs placed students' skills
 - Identify missing skills
 - Get recommendations for improvement
 
-#### 11. **📄 Generate Resume**
+#### 11. ** Generate Resume**
 - Auto-generate professional resume in PDF format
 - Includes education, skills, projects, certifications
 - Download and share with companies
 - One-click PDF generation
 
-#### 12. **🔔 Notifications**
+#### 12. ** Notifications**
 - Receive real-time placement updates
 - Track application status changes
 - See new opportunities and announcements
 - View notification history
 
-#### 13. **👤 Profile**
+#### 13. ** Profile**
 - View and edit personal information
 - Update CGPA and backlogs
 - Upload profile picture
 - Update phone number and contact info
 
-#### 14. **🔐 Password**
+#### 14. ** Password**
 - Change account password securely
 - Verify old password before change
 - Set new password with confirmation
 
 ### Student Menu Navigation
 ```
-📋 Drives → Apply to open placements
-📝 My Applications → Track application status & DELETE
-📅 My Interviews → Book interview slots  
+ Drives → Apply to open placements
+ My Applications → Track application status & DELETE
+ My Interviews → Book interview slots  
 👨‍🏫 Book Mentorship → Browse and book alumni mentors
-🎯 Skills → Manage your skills
-💻 Projects → Showcase your work
-🎓 Education → Add education records
-📜 Certifications → Manage certifications
-💼 Job Posts → View alumni job posts
-📊 Skill Gap → Analyze skills
-📄 Generate Resume → Download PDF resume
-🔔 Notifications → Check alerts
-👤 Profile → Edit profile info
-🔐 Password → Change password
+ Skills → Manage your skills
+ Projects → Showcase your work
+ Education → Add education records
+ Certifications → Manage certifications
+ Job Posts → View alumni job posts
+ Skill Gap → Analyze skills
+ Generate Resume → Download PDF resume
+ Notifications → Check alerts
+ Profile → Edit profile info
+ Password → Change password
 ```
 
 ---
 
-## 🎓 ALUMNI DASHBOARD
+##  ALUMNI DASHBOARD
 
 ### Features Available
 
-#### 1. **📊 Dashboard**
+#### 1. ** Dashboard**
 - Quick statistics overview
 - Number of job posts created
 - Number of mentorship slots
 - Number of booked mentoring sessions
 - Quick access to all features
 
-#### 2. **💼 My Job Posts**
+#### 2. ** My Job Posts**
 - View all posted job opportunities
 - Delete jobs as needed
 - Track job posts
 - Manage opportunities
 
-#### 3. **➕ Post Job**
+#### 3. ** Post Job**
 - Create new job postings
 - Add job title and company name
 - Include detailed job description
@@ -148,33 +148,33 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - Delete slots as needed
 - Monitor mentoring schedule
 
-#### 5. **➕ Create Slot**
+#### 5. ** Create Slot**
 - Schedule mentorship availability
 - Set start and end times
 - System prevents overlapping slots
 - Make yourself available for students
 - Support student career guidance
 
-#### 6. **👤 Profile**
+#### 6. ** Profile**
 - View and update personal information
 - Edit phone number and contact details
 - Upload profile picture
 - Manage profile information
 
-#### 7. **🔐 Password**
+#### 7. ** Password**
 - Change account password securely
 - Update password with confirmation
 - Protect account security
 
 ### Alumni Menu Navigation
 ```
-📊 Dashboard → View statistics
-💼 My Job Posts → Manage posted jobs
-➕ Post Job → Create new job posting
+ Dashboard → View statistics
+ My Job Posts → Manage posted jobs
+ Post Job → Create new job posting
 👨‍🏫 Mentorship Slots → View created slots
-➕ Create Slot → Schedule mentorship time
-👤 Profile → Edit profile
-🔐 Password → Change password
+ Create Slot → Schedule mentorship time
+ Profile → Edit profile
+ Password → Change password
 ```
 
 ### How Students Book Your Mentorship Slots
@@ -191,7 +191,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 
 ### Features Available
 
-#### 1. **📊 Dashboard (Widget View)**
+#### 1. ** Dashboard (Widget View)**
 - Total active drives count
 - Total applications received
 - Total registered students
@@ -199,7 +199,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - Placement percentage
 - Average package offered
 
-#### 2. **➕ Create Drive**
+#### 2. ** Create Drive**
 - Create new placement drives
 - Add company name
 - Set job title and description
@@ -209,14 +209,14 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - Upload company logo/image
 - System stores drive for students to see
 
-#### 3. **🎯 Manage Drives**
+#### 3. ** Manage Drives**
 - View all created drives
 - Edit drive details (title, description, CGPA, backlogs, status)
 - Update company information
 - Delete old/completed drives
 - Close drives when not accepting applications
 
-#### 4. **📋 Applications Management**
+#### 4. ** Applications Management**
 - View all student applications
 - See student name, email, and applied drive
 - Check current application status
@@ -231,7 +231,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - Customize notification messages
 - Inform students about new drive opportunities
 
-#### 6. **📅 Schedule Interviews**
+#### 6. ** Schedule Interviews**
 - Create interview time slots
 - Select the drive for the interview
 - Set start and end time
@@ -239,7 +239,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - System prevents time conflicts
 - Organize interview schedules
 
-#### 7. **📊 Analytics**
+#### 7. ** Analytics**
 - View **Total Students** registered
 - See **Placed Students** count
 - Check **Unplaced Students** count
@@ -250,14 +250,14 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 
 ### TPO Menu Navigation
 ```
-📊 Dashboard → View overview statistics
-➕ Create Drive → Create new placement drive
-🎯 Manage Drives → Edit or delete drives
-📋 Applications → Track student applications
+ Dashboard → View overview statistics
+ Create Drive → Create new placement drive
+ Manage Drives → Edit or delete drives
+ Applications → Track student applications
 👥 Eligible Students → View unplaced students & send notifications
-📅 Schedule Interviews → Create interview slots
-📊 Analytics → View placement statistics
-🔐 Password → Change password
+ Schedule Interviews → Create interview slots
+ Analytics → View placement statistics
+ Password → Change password
 ```
 
 ### Workflow: Creating and Managing a Placement Drive
@@ -334,7 +334,7 @@ All features connect to backend APIs:
 
 ---
 
-## 📊 Recent Enhancements
+##  Recent Enhancements
 
 ### New Features in This Update
 
@@ -477,7 +477,7 @@ The sidebar automatically adapts to screen size.
 
 ---
 
-## 📝 Troubleshooting
+##  Troubleshooting
 
 ### Issue: Dashboard not loading
 - Check browser console for JavaScript errors
@@ -501,7 +501,7 @@ The sidebar automatically adapts to screen size.
 
 ---
 
-## 🎓 User Guides
+##  User Guides
 
 ### For Students:
 1. Register via login page
@@ -530,7 +530,7 @@ The sidebar automatically adapts to screen size.
 
 ---
 
-## 📞 Support
+##  Support
 
 For issues or questions:
 1. Check the API documentation

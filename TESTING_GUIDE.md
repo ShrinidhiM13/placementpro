@@ -452,7 +452,7 @@ Role: ADMIN/TPO
 
 ---
 
-## 📊 Test Results Summary
+##  Test Results Summary
 
 ### Manual Testing
 After completing all tests, fill in results:
@@ -504,7 +504,7 @@ Recommendations: _______________________
 
 ---
 
-## 📝 Test Report Template
+##  Test Report Template
 
 ```
 Date: _______________
