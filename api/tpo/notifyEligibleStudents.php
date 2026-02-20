@@ -3,6 +3,7 @@
 require_once "../../middleware/authMiddleware.php";
 require_once "../../utils/response.php";
 require_once "../../config/database.php";
+
 require_once "../../utils/PHPMailer/src/PHPMailer.php";
 require_once "../../utils/PHPMailer/src/SMTP.php";
 require_once "../../utils/PHPMailer/src/Exception.php";
@@ -15,16 +16,17 @@ $user = authenticate("TPO");
 $db = new Database();
 $conn = $db->getConnection();
 
-$data = json_decode(file_get_contents("php://input"), true);
+/* ==============================
+   FIXED MESSAGE
+============================== */
 
-if (!isset($data['message'])) {
-    jsonResponse(false, "Message required", null, 400);
-}
+$title = "New Placement Drive Available";
+$message = "A new placement drive is available. Please login to PlacementPro and apply as soon as possible.";
 
-$message = $conn->real_escape_string($data['message']);
-$title = "Placement Drive Notification";
+/* ==============================
+   GET ALL ELIGIBLE STUDENTS
+============================== */
 
-/* Get all eligible students */
 $query = "
 SELECT User.id, User.email, User.name
 FROM Student
@@ -38,40 +40,51 @@ if (!$result || $result->num_rows === 0) {
     jsonResponse(false, "No eligible students found");
 }
 
-/* Gmail Credentials (Use ENV in production) */
-$gmailUser = "shrinidhimbrazil@gmail.com";
-$gmailPass = "ykpm naxb ugwr lwhv"; // CHANGE THIS
+/* ==============================
+   SETUP GMAIL SMTP
+============================== */
 
 $mail = new PHPMailer(true);
 
 try {
+
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = $gmailUser;
-    $mail->Password   = $gmailPass;
-    $mail->SMTPSecure = 'tls';
+    $mail->Username   = 'shrinidhimbrazil@gmail.com';
+    $mail->Password   = 'ykpmnaxbugwrlwhv'; // 🔴 replace with new one
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 
-    $mail->setFrom($gmailUser, "PlacementPro");
+   // $mail->setFrom('shrinidhimbrazil@gmail.com', 'PlacementPro');
+$mail->SMTPDebug = 2;
+    /* ==============================
+       LOOP THROUGH STUDENTS
+    ============================== */
 
     while ($student = $result->fetch_assoc()) {
 
-        // Insert notification in DB
+        // 1️⃣ Insert notification into DB
         $conn->query("
             INSERT INTO Notification (userId, title, message)
             VALUES ({$student['id']}, '$title', '$message')
         ");
 
+        // 2️⃣ Send email
         $mail->addAddress($student['email'], $student['name']);
     }
 
+    $mail->isHTML(true);
     $mail->Subject = $title;
-    $mail->Body    = $message;
+    $mail->Body    = "
+        <h3>PlacementPro Notification</h3>
+        <p>$message</p>
+        <p><b>Login Now:</b> http://localhost/placementpro/public/login.html</p>
+    ";
 
     $mail->send();
 
-    jsonResponse(true, "Notification sent to all eligible students");
+    jsonResponse(true, "Emails and notifications sent to all eligible students successfully");
 
 } catch (Exception $e) {
     jsonResponse(false, "Mail Error: " . $mail->ErrorInfo);

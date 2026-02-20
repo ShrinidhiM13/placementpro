@@ -1210,57 +1210,7 @@ async function updateApplicationStatus(id, status){
   }
 }
 
-async function showEligibleStudents() {
-  const token = localStorage.getItem("token");
 
-  const res = await fetch("../api/tpo/eligibleStudents.php", {
-    headers: { "Authorization": "Bearer " + token }
-  });
-
-  const data = await res.json();
-
-  let html = "<h2>👥 Eligible Students (Unplaced)</h2>";
-
-  if (!data.data || data.data.length === 0) {
-    html += "<p>No eligible students</p>";
-    document.getElementById("content").innerHTML = html;
-    return;
-  }
-
-  html += `
-    <div class="table-responsive">
-      <table class="data-table">
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>CGPA</th>
-          <th>Backlogs</th>
-        </tr>
-  `;
-
-  data.data.forEach(student => {
-    html += `
-      <tr>
-        <td>${student.name}</td>
-        <td>${student.email}</td>
-        <td>${student.cgpa}</td>
-        <td>${student.backlogCount}</td>
-      </tr>
-    `;
-  });
-
-  html += "</table></div>";
-
-  html += `
-    <div style="margin-top:20px;">
-      <button onclick="notifyAllStudents()" class="btn-primary">
-        📧 Notify All Eligible Students
-      </button>
-    </div>
-  `;
-
-  document.getElementById("content").innerHTML = html;
-}
 
 async function notifyStudent(userId) {
   const message = prompt("Enter notification message:");

@@ -110,36 +110,52 @@ function initDashboard() {
 }
 
 async function loadUserInfo(){
+
   const token = localStorage.getItem("token");
-  const res = await fetch("../api/student/profile.php", {
+  const role = localStorage.getItem("role");
+
+  let api = "";
+
+  if(role === "STUDENT"){
+    api = "../api/student/profile.php";
+  }
+  else if(role === "ALUMNI"){
+    api = "../api/alumni/profile.php";
+  }
+  else if(role === "TPO"){
+    api = "../api/tpo/profile.php";
+  }
+
+  if(!api) return;
+
+  const res = await fetch(api, {
     headers: { "Authorization": "Bearer " + token }
   });
+
+  if(!res.ok) return;
 
   const data = await res.json();
   if(!data.success) return;
 
   const profile = data.data;
-  const role = localStorage.getItem("role");
-  const name = profile.name;
 
   document.getElementById("userInfo").innerHTML = `
-    ${profile.profileImage ? 
-      `<img src="../${profile.profileImage}">` :
-      `<img src="https://ui-avatars.com/api/?name=${name}&background=FDBA74&color=1A1C1E">`
-    }
-    <div>
-      <div style="font-weight:bold">${name}</div>
-      <div class="secondary">${role}</div>
-    </div>
+    <div style="font-weight:bold">${profile.name}</div>
+    <div class="secondary">${role}</div>
   `;
 }
-
 ///////////////////////////////////////////////////////
 // STUDENT FEATURES
 ///////////////////////////////////////////////////////
 
 async function showStudentDrives(){
-  const res = await fetch("../api/common/drives.php");
+  const token = localStorage.getItem("token");
+
+const res = await fetch("../api/common/drives.php", {
+  headers: {
+    "Authorization": "Bearer " + token
+  }
+});
   const data = await res.json();
 
   let html = "<h2> Open Drives</h2>";
@@ -1268,7 +1284,11 @@ async function deleteMentorSlot(slotId) {
 async function showTpoDashboard(){
   const token = localStorage.getItem("token");
 
-  const driveRes = await fetch("../api/common/drives.php");
+  const driveRes = await fetch("../api/common/drives.php", {
+  headers: {
+    "Authorization": "Bearer " + token
+  }
+});
   const driveData = await driveRes.json();
 
   const appRes = await fetch("../api/tpo/viewApplications.php", {
@@ -1318,20 +1338,52 @@ async function showTpoDashboard(){
   document.getElementById("content").innerHTML = html;
 }
 
-function showCreateDrive(){
+async function showCreateDrive() {
+
+  const token = localStorage.getItem("token");
+
+  const companyRes = await fetch("../api/tpo/getCompanies.php", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  const branchRes = await fetch("../api/tpo/getBranches.php", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  const companies = (await companyRes.json()).data;
+  const branches = (await branchRes.json()).data;
+
+  let companyOptions = "";
+  companies.forEach(c => {
+    companyOptions += `<option value="${c.id}">${c.name}</option>`;
+  });
+
+  let branchOptions = "";
+  branches.forEach(b => {
+    branchOptions += `<option value="${b.id}">${b.name}</option>`;
+  });
+
   document.getElementById("content").innerHTML = `
-    <h2> Create Drive</h2>
+    <h2>Create Drive</h2>
 
     <div class="card">
       <form id="createDriveForm" enctype="multipart/form-data">
+
         <label>Company</label>
-        <input name="companyName" placeholder="Company Name" required>
+        <select name="companyId" required>
+          ${companyOptions}
+        </select>
+
+        <label>Branch</label>
+        <select name="branchId" required>
+          ${branchOptions}
+        </select>
 
         <label>Job Title</label>
-        <input name="jobTitle" placeholder="Job Title" required>
+        <input name="title" required>
 
         <label>Description</label>
-        <textarea name="description" placeholder="Job Description" required></textarea>
+        <textarea name="description" required></textarea>
 
         <label>Min CGPA</label>
         <input name="minCgpa" type="number" step="0.01" required>
@@ -1340,7 +1392,7 @@ function showCreateDrive(){
         <input name="maxBacklogs" type="number" required>
 
         <label>Status</label>
-        <select name="status">
+        <select name="status" required>
           <option value="OPEN">OPEN</option>
           <option value="CLOSED">CLOSED</option>
         </select>
@@ -1355,8 +1407,7 @@ function showCreateDrive(){
 
   document.getElementById("createDriveForm").onsubmit = createDrive;
 }
-
-async function createDrive(e){
+async function createDrive(e) {
   e.preventDefault();
 
   const token = localStorage.getItem("token");
@@ -1365,27 +1416,38 @@ async function createDrive(e){
 
   const res = await fetch("../api/tpo/createDrive.php", {
     method: "POST",
-    headers: { "Authorization": "Bearer " + token },
+    headers: {
+      "Authorization": "Bearer " + token
+    },
     body: formData
   });
 
   const data = await res.json();
   alert(data.message);
-
-  if(data.success){
-    showManageDrives();
-  }
 }
 
 async function showManageDrives(){
-  const res = await fetch("../api/common/drives.php");
+
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("../api/common/drives.php", {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  if(!res.ok){
+    alert("Unauthorized. Please login again.");
+    return;
+  }
+
   const data = await res.json();
 
   let html = "<h2> Manage Drives</h2>";
 
-  if(!data.data || data.data.length === 0) {
+  if(!data.success || !data.data || data.data.length === 0){
     html += "<p>No drives created yet</p>";
-    document.getElementById("content").innerHTML =html;
+    document.getElementById("content").innerHTML = html;
     return;
   }
 
@@ -1397,25 +1459,73 @@ async function showManageDrives(){
         <p class="secondary">${drive.companyName}</p>
         <p><strong>Min CGPA:</strong> ${drive.minCgpa}</p>
         <p><strong>Max Backlogs:</strong> ${drive.maxBacklogs}</p>
-        <p><strong>Status:</strong> <span class="status-badge status-${drive.status.toLowerCase()}">${drive.status}</span></p>
+        <p><strong>Status:</strong> 
+          <span class="status-badge status-${drive.status.toLowerCase()}">
+            ${drive.status}
+          </span>
+        </p>
 
-        <button onclick="editDrive(${drive.id}, '${drive.title}', '${drive.description}', ${drive.minCgpa}, ${drive.maxBacklogs}, '${drive.status}')" class="btn-small">Edit</button>
+        <button onclick="editDrive(${drive.id}, 
+          '${drive.title.replace(/'/g,"\\'")}', 
+          '${drive.description.replace(/'/g,"\\'")}', 
+          ${drive.minCgpa}, 
+          ${drive.maxBacklogs}, 
+          '${drive.status}', 
+          ${drive.companyId}, 
+          ${drive.branchId}
+        )" class="btn-small">Edit</button>
 
-        <button onclick="deleteDrive(${drive.id})" class="btn-small btn-danger">Delete</button>
+        <button onclick="deleteDrive(${drive.id})" 
+          class="btn-small btn-danger">Delete</button>
       </div>
     `;
   });
-  html += "</div>";
 
+  html += "</div>";
   document.getElementById("content").innerHTML = html;
 }
 
-function editDrive(id, title, description, minCgpa, maxBacklogs, status){
+async function editDrive(id, title, description, minCgpa, maxBacklogs, status, companyId, branchId){
+
+  const token = localStorage.getItem("token");
+
+  const companyRes = await fetch("../api/tpo/getCompanies.php", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  const branchRes = await fetch("../api/tpo/getBranches.php", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  const companies = (await companyRes.json()).data;
+  const branches = (await branchRes.json()).data;
+
+  let companyOptions = "";
+  companies.forEach(c => {
+    companyOptions += `<option value="${c.id}" ${c.id == companyId ? "selected" : ""}>${c.name}</option>`;
+  });
+
+  let branchOptions = "";
+  branches.forEach(b => {
+    branchOptions += `<option value="${b.id}" ${b.id == branchId ? "selected" : ""}>${b.name}</option>`;
+  });
+
   document.getElementById("content").innerHTML = `
     <h2>Edit Drive</h2>
 
     <div class="card">
       <form id="editDriveForm" enctype="multipart/form-data">
+
+        <label>Company</label>
+        <select name="companyId" required>
+          ${companyOptions}
+        </select>
+
+        <label>Branch</label>
+        <select name="branchId" required>
+          ${branchOptions}
+        </select>
+
         <label>Title</label>
         <input name="title" value="${title}" required>
 
@@ -1446,7 +1556,6 @@ function editDrive(id, title, description, minCgpa, maxBacklogs, status){
     updateDrive(e, id);
   };
 }
-
 async function updateDrive(e, id){
   e.preventDefault();
 
@@ -1570,8 +1679,7 @@ async function updateApplicationStatus(id, status){
     showTpoApplications();
   }
 }
-
-async function showEligibleStudents(){
+async function showEligibleStudents() {
   const token = localStorage.getItem("token");
 
   const res = await fetch("../api/tpo/eligibleStudents.php", {
@@ -1582,7 +1690,7 @@ async function showEligibleStudents(){
 
   let html = "<h2>👥 Eligible Students (Unplaced)</h2>";
 
-  if(!data.data || data.data.length === 0) {
+  if (!data.data || data.data.length === 0) {
     html += "<p>No eligible students</p>";
     document.getElementById("content").innerHTML = html;
     return;
@@ -1596,7 +1704,6 @@ async function showEligibleStudents(){
           <th>Email</th>
           <th>CGPA</th>
           <th>Backlogs</th>
-          <th>Action</th>
         </tr>
   `;
 
@@ -1607,40 +1714,48 @@ async function showEligibleStudents(){
         <td>${student.email}</td>
         <td>${student.cgpa}</td>
         <td>${student.backlogCount}</td>
-        <td>
-          <button onclick="notifyStudent(${student.userId}, '${student.name}')" class="btn-small">Notify</button>
-        </td>
       </tr>
     `;
   });
 
-  html += "</table></div>";
+  html += `
+      </table>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <button onclick="notifyAllStudents()" class="btn-primary">
+        📧 Notify All Eligible Students
+      </button>
+    </div>
+  `;
+
   document.getElementById("content").innerHTML = html;
 }
 
-async function notifyStudent(userId, studentName) {
-  const message = prompt(`Send notification to ${studentName}:\n(Enter your message)`, "");
-  if(!message) return;
+
+
+async function notifyAllStudents() {
 
   const token = localStorage.getItem("token");
 
   const res = await fetch("../api/tpo/notifyEligibleStudents.php", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "Authorization": "Bearer " + token
-    },
-    body: JSON.stringify({studentId: userId, message})
+    }
   });
 
   const data = await res.json();
   alert(data.message);
 }
-
 async function showScheduleInterview(){
   const token = localStorage.getItem("token");
 
-  const drivesRes = await fetch("../api/common/drives.php");
+ const drivesRes = await fetch("../api/common/drives.php", {
+  headers: {
+    "Authorization": "Bearer " + token
+  }
+});
   const drivesData = await drivesRes.json();
 
   let driveOptions = '<option value="">Select Drive</option>';

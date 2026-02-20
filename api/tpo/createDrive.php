@@ -9,11 +9,15 @@ $user = authenticate("TPO");
 $db = new Database();
 $conn = $db->getConnection();
 
-/* Validate Required Fields */
+/* =========================
+   VALIDATE REQUIRED FIELDS
+========================= */
+
 if(
     !isset($_POST['title']) ||
     !isset($_POST['description']) ||
     !isset($_POST['companyId']) ||
+    !isset($_POST['branchId']) ||   // ✅ Added
     !isset($_POST['minCgpa']) ||
     !isset($_POST['maxBacklogs']) ||
     !isset($_POST['status'])
@@ -21,22 +25,51 @@ if(
     jsonResponse(false,"All fields are required");
 }
 
+/* =========================
+   SANITIZE INPUT
+========================= */
+
 $title = $conn->real_escape_string($_POST['title']);
 $description = $conn->real_escape_string($_POST['description']);
 $companyId = intval($_POST['companyId']);
+$branchId = intval($_POST['branchId']);   // ✅ Added
 $minCgpa = floatval($_POST['minCgpa']);
 $maxBacklogs = intval($_POST['maxBacklogs']);
 $status = $conn->real_escape_string($_POST['status']);
 
-/* Validate Status */
+/* =========================
+   VALIDATE STATUS
+========================= */
+
 $allowedStatus = ['OPEN','CLOSED'];
 if(!in_array($status, $allowedStatus)){
     jsonResponse(false,"Invalid status");
 }
 
+/* =========================
+   VALIDATE COMPANY EXISTS
+========================= */
+
+$checkCompany = $conn->query("SELECT id FROM Company WHERE id = $companyId");
+if($checkCompany->num_rows === 0){
+    jsonResponse(false,"Invalid company selected");
+}
+
+/* =========================
+   VALIDATE BRANCH EXISTS
+========================= */
+
+$checkBranch = $conn->query("SELECT id FROM Branch WHERE id = $branchId");
+if($checkBranch->num_rows === 0){
+    jsonResponse(false,"Invalid branch selected");
+}
+
+/* =========================
+   HANDLE IMAGE UPLOAD
+========================= */
+
 $imagePath = null;
 
-/* Handle Image Upload */
 if(isset($_FILES['image']) && $_FILES['image']['error'] === 0){
 
     $allowed = ['jpg','jpeg','png'];
@@ -62,12 +95,15 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] === 0){
     }
 }
 
-/* Insert Drive */
+/* =========================
+   INSERT DRIVE
+========================= */
+
 $query = "
     INSERT INTO Drive 
-    (companyId,title,description,minCgpa,maxBacklogs,status,image)
+    (companyId, branchId, title, description, minCgpa, maxBacklogs, status, image)
     VALUES 
-    ($companyId,'$title','$description',$minCgpa,$maxBacklogs,'$status'," .
+    ($companyId, $branchId, '$title', '$description', $minCgpa, $maxBacklogs, '$status', " .
     ($imagePath ? "'$imagePath'" : "NULL") .
     ")
 ";
