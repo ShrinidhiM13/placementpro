@@ -36,6 +36,19 @@ FROM PlacementRecord
 
 $avgPackage = $avgPackage ? round($avgPackage,2) : 0;
 
+/* Highest Package */
+$highestPackage = $conn->query("
+SELECT MAX(package) as maxPackage 
+FROM PlacementRecord
+")->fetch_assoc()['maxPackage'];
+
+$highestPackage = $highestPackage ? round($highestPackage,2) : 0;
+
+/* Placement Percentage */
+$placementPercentage = $totalStudents > 0 
+    ? round(($placedStudents / $totalStudents) * 100, 2) . '%'
+    : '0%';
+
 /* Top Hiring Company */
 $topCompanyQuery = "
 SELECT Company.name, COUNT(*) as hires
@@ -56,8 +69,10 @@ jsonResponse(true, "Placement Analytics", [
     "totalStudents" => $totalStudents,
     "placedStudents" => $placedStudents,
     "unplacedStudents" => $unplaced,
+    "placementPercentage" => $placementPercentage,
     "totalDrives" => $totalDrives,
     "totalApplications" => $totalApplications,
+    "highestPackage" => $highestPackage,
     "averagePackage" => $avgPackage,
     "topHiringCompany" => $topCompany
 ]);

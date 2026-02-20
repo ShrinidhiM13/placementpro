@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     $data = json_decode(file_get_contents("php://input"), true);
-    $certId = intval($data['certId']);
+    $certId = intval($data['certificationId'] ?? $data['certId']);
 
     $conn->query("
         DELETE FROM Certification

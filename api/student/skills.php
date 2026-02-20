@@ -33,12 +33,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $data = json_decode(file_get_contents("php://input"), true);
+    
+    if(isset($data['skillName'])) {
+        // Add new skill by name
+        $skillName = $conn->real_escape_string($data['skillName']);
+        
+        // Check if skill exists, if not create it
+        $skillCheck = $conn->query("SELECT id FROM Skill WHERE name='$skillName'")->fetch_assoc();
+        
+        if($skillCheck) {
+            $skillId = $skillCheck['id'];
+        } else {
+            $conn->query("INSERT INTO Skill (name) VALUES ('$skillName')");
+            $skillId = $conn->insert_id;
+        }
+        
+        $conn->query("
+            INSERT INTO StudentSkill (studentId, skillId)
+            VALUES ($studentId, $skillId)
+        ");
+
+        jsonResponse(true, "Skill Added");
+    } else {
+        jsonResponse(false, "Skill name required");
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+    $data = json_decode(file_get_contents("php://input"), true);
     $skillId = intval($data['skillId']);
 
     $conn->query("
-        INSERT INTO StudentSkill (studentId, skillId)
-        VALUES ($studentId, $skillId)
+        DELETE FROM StudentSkill
+        WHERE studentId=$studentId AND skillId=$skillId
     ");
 
-    jsonResponse(true, "Skill Added");
+    jsonResponse(true, "Skill Removed");
 }

@@ -1,21 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PlacementPro Login</title>
+  <title>PlacementPro - Login</title>
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .auth-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .auth-card {
+      width: 350px;
+    }
+    .toggle-auth {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .toggle-auth a {
+      color: #FDBA74;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body class="center">
 
-<div class="card">
-  <h2>PlacementPro</h2>
-  <p class="secondary">Login to continue</p>
+<div class="auth-container">
+  <!-- Login Form -->
+  <div class="card auth-card" id="loginForm">
+    <h2>PlacementPro</h2>
+    <p class="secondary">Login to your account</p>
 
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
+    <input id="email" placeholder="Email" type="email" required>
+    <input id="password" type="password" placeholder="Password" required>
 
-  <button onclick="login()">Login</button>
+    <button onclick="login()" class="btn-primary">Login</button>
+    
+    <div class="toggle-auth">
+      Don't have an account? <a onclick="showRegister()">Register here</a>
+    </div>
+  </div>
+
+  <!-- Register Form -->
+  <div class="card auth-card" id="registerForm" style="display: none;">
+    <h2>Create Account</h2>
+    <p class="secondary">Join PlacementPro</p>
+
+    <input id="regName" placeholder="Full Name" required>
+    <input id="regEmail" placeholder="Email" type="email" required>
+    <input id="regPassword" type="password" placeholder="Password" required>
+    <input id="regPhone" placeholder="Phone" type="tel" required>
+
+    <label>Register as:</label>
+    <select id="regRole" required>
+      <option value="STUDENT">Student</option>
+      <option value="ALUMNI">Alumni</option>
+      <option value="TPO">TPO (Admin)</option>
+    </select>
+
+    <button onclick="register()">Create Account</button>
+    
+    <div class="toggle-auth">
+      Already have an account? <a onclick="showLogin()">Login here</a>
+    </div>
+  </div>
 </div>
 
 <script src="assets/app.js"></script>
+<script>
+  function showLogin() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+  }
+
+  function showRegister() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+  }
+</script>
+
 </body>
 </html>

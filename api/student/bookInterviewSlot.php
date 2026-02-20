@@ -11,16 +11,25 @@ $conn = $db->getConnection();
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data['slotId'], $data['driveId'])) {
-    jsonResponse(false, "Slot ID and Drive ID required", null, 400);
+if (!isset($data['slotId'])) {
+    jsonResponse(false, "Slot ID required", null, 400);
 }
 
 $slotId = intval($data['slotId']);
-$driveId = intval($data['driveId']);
 
 /* Get Student */
 $studentQuery = "SELECT * FROM Student WHERE userId={$user['id']} LIMIT 1";
 $student = $conn->query($studentQuery)->fetch_assoc();
+
+/* Get DriveId from Slot */
+$slotQuery = "SELECT driveId FROM InterviewSlot WHERE id=$slotId LIMIT 1";
+$slotQueryResult = $conn->query($slotQuery)->fetch_assoc();
+
+if(!$slotQueryResult) {
+    jsonResponse(false, "Slot not found", null, 404);
+}
+
+$driveId = $slotQueryResult['driveId'];
 
 /* Check if already booked */
 $existingCheck = $conn->query("

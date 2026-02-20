@@ -9,19 +9,26 @@ $user = authenticate("STUDENT");
 $db = new Database();
 $conn = $db->getConnection();
 
-if (!isset($_GET['driveId'])) {
-    jsonResponse(false, "Drive ID required", null, 400);
-}
+$student = $conn->query("SELECT id FROM Student WHERE userId={$user['id']}")->fetch_assoc();
+$studentId = $student['id'];
 
-$driveId = intval($_GET['driveId']);
-
-/* Fetch available slots */
+// Get all applications for this student to filter interview slots for those drives
 $query = "
-SELECT id, startTime, endTime, room
+SELECT 
+    InterviewSlot.id,
+    InterviewSlot.startTime,
+    InterviewSlot.endTime,
+    InterviewSlot.room,
+    Drive.title AS driveTitle,
+    Company.name AS companyName
 FROM InterviewSlot
-WHERE driveId=$driveId
-AND isBooked=0
-ORDER BY startTime ASC
+JOIN Drive ON InterviewSlot.driveId = Drive.id
+JOIN Company ON Drive.companyId = Company.id
+WHERE Drive.id IN (
+    SELECT DISTINCT driveId FROM Application WHERE studentId=$studentId
+)
+AND InterviewSlot.isBooked=0
+ORDER BY InterviewSlot.startTime ASC
 ";
 
 $result = $conn->query($query);
@@ -32,4 +39,4 @@ while ($row = $result->fetch_assoc()) {
     $slots[] = $row;
 }
 
-jsonResponse(true, "Available Slots", $slots);
+jsonResponse(true, "Available Interview Slots", $slots);

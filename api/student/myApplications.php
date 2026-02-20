@@ -24,6 +24,7 @@ $studentId = $studentRow['id'];
 /* Fetch Applications */
 $query = "
     SELECT 
+        a.id,
         d.title AS driveTitle,
         c.name AS companyName,
         a.status,

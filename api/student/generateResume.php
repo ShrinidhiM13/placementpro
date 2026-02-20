@@ -93,5 +93,17 @@ foreach ($projects as $project) {
 }
 
 /* Output PDF */
-$pdf->Output("I","Resume.pdf");
-exit;
+$filename = "Resume_" . time() . ".pdf";
+$filepath = "../../uploads/resumes/" . $filename;
+
+// Create directory if it doesn't exist
+if (!is_dir("../../uploads/resumes")) {
+    mkdir("../../uploads/resumes", 0777, true);
+}
+
+$pdf->Output("F", $filepath);
+
+jsonResponse(true, "Resume Generated Successfully", [
+    "pdfUrl" => "uploads/resumes/" . $filename,
+    "filename" => $filename
+]);
