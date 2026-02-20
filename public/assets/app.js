@@ -700,7 +700,7 @@ async function showMentorSlots(){
 
   const data = await res.json();
 
-  let html = "<h2>👨‍🏫 Available Mentor Slots</h2>";
+  let html = "<h2> Available Mentor Slots</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='grid'>";
@@ -1160,7 +1160,7 @@ async function showAlumniMentorSlots(){
 
   const data = await res.json();
 
-  let html = "<h2>👨‍🏫 My Mentorship Slots</h2>";
+  let html = "<h2> My Mentorship Slots</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='grid'>";

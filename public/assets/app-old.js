@@ -656,7 +656,7 @@ async function showMentorSlots(){
 
   const data = await res.json();
 
-  let html = "<h2>👨‍🏫 Mentor Slots</h2>";
+  let html = "<h2> Mentor Slots</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='grid'>";
@@ -1430,7 +1430,7 @@ async function showMentorManager(){
 
   const data = await res.json();
 
-  let html = "<h2>👨‍🏫 Mentor Slots</h2>";
+  let html = "<h2> Mentor Slots</h2>";
   html += `
     <div class="card">
       <h3>Create New Slot</h3>

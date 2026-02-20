@@ -152,7 +152,7 @@ placementpro/
 -  Drives & Application Management
 -  My Applications (with **DELETE option**)
 -  Interview Slot Booking
-- 👨‍🏫 Mentorship Slot Booking
+-  Mentorship Slot Booking
 -  Skills Management
 -  Projects Portfolio
 -  Education Records
@@ -168,7 +168,7 @@ placementpro/
 -  Dashboard Statistics
 -  Job Post Management (with **DELETE**)
 -  Create & Post Jobs
-- 👨‍🏫 Mentorship Slot Management (with **DELETE**)
+-  Mentorship Slot Management (with **DELETE**)
 -  Profile & Password Management
 
 ### TPO Admin Dashboard (8 Features) ✅

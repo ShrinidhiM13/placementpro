@@ -658,7 +658,7 @@ async function showMentorSlots(){
 
   const data = await res.json();
 
-  let html = "<h2>👨‍🏫 Mentor Slots</h2>";
+  let html = "<h2> Mentor Slots</h2>";
 
   if(data.data && data.data.length > 0) {
     html += "<div class='grid'>";
@@ -770,6 +770,7 @@ async function showGenerateResume(){
     <div class="card">
       <button onclick="generatePDF()" class="btn-primary">Download Resume as PDF</button>
     </div>
+
   `;
 }
 
@@ -782,8 +783,13 @@ async function generatePDF() {
 
   const data = await res.json();
 
-  if(data.success) {
-    window.open(data.data.pdfUrl, '_blank');
+  if (data.success) {
+    const link = document.createElement("a");
+    link.href = data.data.pdfUrl;
+    link.download = "My_Resume.pdf";   // force download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   } else {
     alert(data.message);
   }
@@ -1204,7 +1210,7 @@ async function updateApplicationStatus(id, status){
   }
 }
 
-async function showEligibleStudents(){
+async function showEligibleStudents() {
   const token = localStorage.getItem("token");
 
   const res = await fetch("../api/tpo/eligibleStudents.php", {
@@ -1213,9 +1219,9 @@ async function showEligibleStudents(){
 
   const data = await res.json();
 
-  let html = "<h2>👥 Eligible Students</h2>";
+  let html = "<h2>👥 Eligible Students (Unplaced)</h2>";
 
-  if(!data.data || data.data.length === 0) {
+  if (!data.data || data.data.length === 0) {
     html += "<p>No eligible students</p>";
     document.getElementById("content").innerHTML = html;
     return;
@@ -1229,7 +1235,6 @@ async function showEligibleStudents(){
           <th>Email</th>
           <th>CGPA</th>
           <th>Backlogs</th>
-          <th>Action</th>
         </tr>
   `;
 
@@ -1240,14 +1245,20 @@ async function showEligibleStudents(){
         <td>${student.email}</td>
         <td>${student.cgpa}</td>
         <td>${student.backlogCount}</td>
-        <td>
-          <button onclick="notifyStudent(${student.userId})" class="btn-small">Notify</button>
-        </td>
       </tr>
     `;
   });
 
   html += "</table></div>";
+
+  html += `
+    <div style="margin-top:20px;">
+      <button onclick="notifyAllStudents()" class="btn-primary">
+        📧 Notify All Eligible Students
+      </button>
+    </div>
+  `;
+
   document.getElementById("content").innerHTML = html;
 }
 
@@ -1269,7 +1280,24 @@ async function notifyStudent(userId) {
   const data = await res.json();
   alert(data.message);
 }
+async function notifyAllStudents() {
+  const message = prompt("Enter notification message:");
+  if (!message) return;
 
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("../api/tpo/notifyEligibleStudents.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({ message })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+}
 async function showScheduleInterview(){
   const token = localStorage.getItem("token");
 
@@ -1432,7 +1460,7 @@ async function showMentorManager(){
 
   const data = await res.json();
 
-  let html = "<h2>👨‍🏫 Mentor Slots</h2>";
+  let html = "<h2> Mentor Slots</h2>";
   html += `
     <div class="card">
       <h3>Create New Slot</h3>

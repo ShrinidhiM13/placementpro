@@ -9,7 +9,10 @@ $user = authenticate("STUDENT");
 $db = new Database();
 $conn = $db->getConnection();
 
-/* Get Student + User */
+/* =========================
+   FETCH STUDENT DETAILS
+========================= */
+
 $query = "
 SELECT User.name, User.email, User.phone,
        Student.cgpa, Student.graduationYear,
@@ -27,7 +30,10 @@ if (!$student) {
     die("Student profile not found");
 }
 
-/* Get Skills */
+/* =========================
+   FETCH SKILLS
+========================= */
+
 $skills = [];
 $skillQuery = "
 SELECT Skill.name
@@ -42,7 +48,10 @@ while ($row = $result->fetch_assoc()) {
     $skills[] = $row['name'];
 }
 
-/* Get Projects */
+/* =========================
+   FETCH PROJECTS
+========================= */
+
 $projects = [];
 $projectQuery = "
 SELECT title, description, techStack
@@ -56,54 +65,94 @@ while ($row = $result->fetch_assoc()) {
     $projects[] = $row;
 }
 
-/* Create PDF */
+/* =========================
+   CREATE PDF
+========================= */
+
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont("Arial","B",16);
 
+/* Name */
+$pdf->SetFont("Arial","B",18);
 $pdf->Cell(0,10,$student['name'],0,1);
+
+/* Contact */
 $pdf->SetFont("Arial","",12);
 $pdf->Cell(0,8,"Email: ".$student['email'],0,1);
 $pdf->Cell(0,8,"Phone: ".$student['phone'],0,1);
 $pdf->Ln(5);
 
+/* Education */
 $pdf->SetFont("Arial","B",14);
 $pdf->Cell(0,10,"Education",0,1);
+
 $pdf->SetFont("Arial","",12);
 $pdf->Cell(0,8,"Branch: ".$student['branchName'],0,1);
 $pdf->Cell(0,8,"CGPA: ".$student['cgpa'],0,1);
 $pdf->Cell(0,8,"Graduation Year: ".$student['graduationYear'],0,1);
 $pdf->Ln(5);
 
+/* Skills */
 $pdf->SetFont("Arial","B",14);
 $pdf->Cell(0,10,"Skills",0,1);
+
 $pdf->SetFont("Arial","",12);
 $pdf->MultiCell(0,8,implode(", ", $skills));
 $pdf->Ln(5);
 
+/* Projects */
 $pdf->SetFont("Arial","B",14);
 $pdf->Cell(0,10,"Projects",0,1);
+
 $pdf->SetFont("Arial","",12);
 
 foreach ($projects as $project) {
+    $pdf->SetFont("Arial","B",12);
     $pdf->Cell(0,8,$project['title'],0,1);
+
+    $pdf->SetFont("Arial","",12);
     $pdf->MultiCell(0,8,$project['description']);
+
     $pdf->Cell(0,8,"Tech Stack: ".$project['techStack'],0,1);
     $pdf->Ln(3);
 }
 
-/* Output PDF */
-$filename = "Resume_" . time() . ".pdf";
-$filepath = "../../uploads/resumes/" . $filename;
+/* =========================
+   SAVE FILE DYNAMICALLY
+========================= */
 
-// Create directory if it doesn't exist
-if (!is_dir("../../uploads/resumes")) {
-    mkdir("../../uploads/resumes", 0777, true);
+$filename = "Resume_" . time() . ".pdf";
+
+/* Absolute folder path */
+$uploadDir = __DIR__ . "/../../uploads/resumes/";
+
+/* Create directory if not exists */
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir, 0777, true);
 }
 
+$filepath = $uploadDir . $filename;
+
+/* Save PDF */
 $pdf->Output("F", $filepath);
 
+/* =========================
+   GENERATE DYNAMIC URL
+========================= */
+
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') 
+            ? "https://" 
+            : "http://";
+
+$baseUrl = $protocol . $_SERVER['HTTP_HOST'] . "/placementpro/uploads/resumes/";
+
+$pdfUrl = $baseUrl . $filename;
+
+/* =========================
+   RETURN RESPONSE
+========================= */
+
 jsonResponse(true, "Resume Generated Successfully", [
-    "pdfUrl" => "uploads/resumes/" . $filename,
+    "pdfUrl" => $pdfUrl,
     "filename" => $filename
 ]);

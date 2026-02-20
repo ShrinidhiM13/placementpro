@@ -32,7 +32,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - Book interview slots
 - Track scheduled interviews
 
-#### 4. **👨‍🏫 Book Mentorship**
+#### 4. ** Book Mentorship**
 - Browse available mentor slots from alumni
 - See mentor details and availability
 - Book mentorship sessions (if available)
@@ -102,7 +102,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
  Drives → Apply to open placements
  My Applications → Track application status & DELETE
  My Interviews → Book interview slots  
-👨‍🏫 Book Mentorship → Browse and book alumni mentors
+ Book Mentorship → Browse and book alumni mentors
  Skills → Manage your skills
  Projects → Showcase your work
  Education → Add education records
@@ -141,7 +141,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
 - Add salary range and location (optional)
 - Help students find opportunities
 
-#### 4. **👨‍🏫 Mentorship Slots**
+#### 4. ** Mentorship Slots**
 - View all created mentorship slots
 - See slot times and dates
 - Track which slots are booked
@@ -171,7 +171,7 @@ The PlacementPro system now includes complete, fully functional dashboards for t
  Dashboard → View statistics
  My Job Posts → Manage posted jobs
  Post Job → Create new job posting
-👨‍🏫 Mentorship Slots → View created slots
+ Mentorship Slots → View created slots
  Create Slot → Schedule mentorship time
  Profile → Edit profile
  Password → Change password

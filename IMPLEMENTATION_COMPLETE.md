@@ -49,7 +49,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
    - Book interview slots for applied drives
    - Get auto-updated with interview details
 
-8. **👨‍🏫 Mentor Slots**
+8. ** Mentor Slots**
    - View available mentor sessions from alumni
    - Book mentoring sessions with experienced alumni
    - Get guidance from seniors in industry
@@ -94,7 +94,7 @@ PlacementPro is a comprehensive placement management system with full UI and bac
    - Share job descriptions
    - Help students find opportunities
 
-2. **👨‍🏫 Mentor Slots**
+2. ** Mentor Slots**
    - Create mentor slots for mentoring students
    - Set start and end times
    - View booking status (available/booked)
