@@ -6,70 +6,47 @@ require_once "../../config/database.php";
 
 $user = authenticate("TPO");
 
-if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-    jsonResponse(false, "Invalid request method", null, 405);
-}
-
 $db = new Database();
 $conn = $db->getConnection();
 
-$data = json_decode(file_get_contents("php://input"), true);
+$driveId = intval($_POST['driveId']);
+$title = $conn->real_escape_string($_POST['title']);
+$description = $conn->real_escape_string($_POST['description']);
+$minCgpa = floatval($_POST['minCgpa']);
+$maxBacklogs = intval($_POST['maxBacklogs']);
+$status = $_POST['status'];
 
-if (!isset($data['driveId'])) {
-    jsonResponse(false, "Drive ID required", null, 400);
-}
+$imageQuery = "";
 
-$driveId = intval($data['driveId']);
+/* ===== IMAGE REUPLOAD ===== */
+if(isset($_FILES['image']) && $_FILES['image']['error'] === 0){
 
-/* Check if drive exists */
-$check = $conn->query("SELECT id FROM Drive WHERE id=$driveId");
+    $allowed = ['jpg','jpeg','png'];
+    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
 
-if ($check->num_rows == 0) {
-    jsonResponse(false, "Drive not found", null, 404);
-}
-
-/* Build dynamic update */
-$fields = [];
-
-if (isset($data['title'])) {
-    $title = $conn->real_escape_string($data['title']);
-    $fields[] = "title='$title'";
-}
-
-if (isset($data['description'])) {
-    $desc = $conn->real_escape_string($data['description']);
-    $fields[] = "description='$desc'";
-}
-
-if (isset($data['minCgpa'])) {
-    $minCgpa = floatval($data['minCgpa']);
-    $fields[] = "minCgpa=$minCgpa";
-}
-
-if (isset($data['maxBacklogs'])) {
-    $maxBacklogs = intval($data['maxBacklogs']);
-    $fields[] = "maxBacklogs=$maxBacklogs";
-}
-
-if (isset($data['status'])) {
-    $allowedStatus = ['OPEN','CLOSED','COMPLETED'];
-
-    if (!in_array($data['status'], $allowedStatus)) {
-        jsonResponse(false, "Invalid status value", null, 400);
+    if(!in_array($ext, $allowed)){
+        jsonResponse(false,"Only JPG, JPEG, PNG allowed");
     }
 
-    $status = $conn->real_escape_string($data['status']);
-    $fields[] = "status='$status'";
+    $newName = "drive_" . time() . "_" . rand(100,999) . "." . $ext;
+    $uploadPath = "../../uploads/drives/" . $newName;
+
+    move_uploaded_file($_FILES['image']['tmp_name'], $uploadPath);
+
+    $imagePath = "uploads/drives/" . $newName;
+
+    $imageQuery = ", image='$imagePath'";
 }
 
-if (empty($fields)) {
-    jsonResponse(false, "No fields to update", null, 400);
-}
+$conn->query("
+    UPDATE Drive 
+    SET title='$title',
+        description='$description',
+        minCgpa=$minCgpa,
+        maxBacklogs=$maxBacklogs,
+        status='$status'
+        $imageQuery
+    WHERE id=$driveId
+");
 
-$updateQuery = "UPDATE Drive SET " . implode(",", $fields) . " WHERE id=$driveId";
-
-if (!$conn->query($updateQuery)) {
-    jsonResponse(false, "Update failed", $conn->error, 500);
-}
-
-jsonResponse(true, "Drive Updated Successfully");
+jsonResponse(true,"Drive updated successfully");

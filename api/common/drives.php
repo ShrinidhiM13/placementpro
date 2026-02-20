@@ -7,17 +7,18 @@ $db = new Database();
 $conn = $db->getConnection();
 
 $query = "
-SELECT Drive.id,
-       Drive.title,
-       Drive.description,
-       Drive.minCgpa,
-       Drive.maxBacklogs,
-       Drive.status,
-       Company.name AS companyName
-FROM Drive
-JOIN Company ON Drive.companyId = Company.id
-WHERE Drive.status='OPEN'
-ORDER BY Drive.createdAt DESC
+SELECT 
+    d.id,
+    d.title,
+    d.description,
+    d.minCgpa,
+    d.maxBacklogs,
+    d.status,
+    d.image,
+    c.name AS companyName
+FROM Drive d
+JOIN Company c ON d.companyId = c.id
+WHERE d.status='OPEN'
 ";
 
 $result = $conn->query($query);

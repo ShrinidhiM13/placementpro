@@ -11,34 +11,23 @@ $conn = $db->getConnection();
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data['applicationId']) || !isset($data['status'])) {
-    jsonResponse(false, "Application ID and Status Required", null, 400);
-}
-
 $applicationId = intval($data['applicationId']);
 $status = $conn->real_escape_string($data['status']);
 
-$allowedStatuses = [
-    'APPLIED',
-    'APTITUDE',
-    'CLEARED',
-    'INTERVIEW_SCHEDULED',
-    'SELECTED',
-    'REJECTED'
-];
+$allowed = ['APPLIED','SHORTLISTED','SELECTED','REJECTED'];
 
-if (!in_array($status, $allowedStatuses)) {
-    jsonResponse(false, "Invalid Status", null, 400);
+if(!in_array($status, $allowed)){
+    jsonResponse(false, "Invalid status");
 }
 
-$query = "UPDATE Application 
-          SET status='$status' 
-          WHERE id=$applicationId";
+$query = "
+    UPDATE Application
+    SET status='$status'
+    WHERE id=$applicationId
+";
 
-if (!$conn->query($query)) {
-    jsonResponse(false, "Update Failed", $conn->error, 500);
+if(!$conn->query($query)){
+    jsonResponse(false, "Update failed");
 }
 
-jsonResponse(true, "Application Status Updated", [
-    "newStatus" => $status
-]);
+jsonResponse(true, "Status updated successfully");
