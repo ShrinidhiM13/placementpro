@@ -1,6 +1,12 @@
 <?php
 
 /* ==============================
+   ERROR REPORTING (TURN OFF IN PROD)
+============================== */
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
+/* ==============================
    CORS HEADERS
 ============================== */
 header("Access-Control-Allow-Origin: *");
@@ -8,69 +14,121 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
-/* Handle Preflight Request */
+/* Handle Preflight */
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
+    echo json_encode(["success" => true]);
     exit();
 }
 
 /* ==============================
    DATABASE CONNECTION
+   ⚠️ CHANGE USERNAME + PASSWORD
 ============================== */
-$conn = new mysqli("localhost", "root", "", "u508697926_form_db");
+$host = "193.203.184.211";
+$username = "u508697926_shri";
+$password = "J+8kAjqP?xDa%Jp";
+$database = "u508697926_form_db";
+
+$conn = new mysqli($host, $username, $password, $database);
 
 if ($conn->connect_error) {
-    die(json_encode(["success"=>false,"message"=>"DB Connection Failed"]));
+    echo json_encode([
+        "success" => false,
+        "error" => "Database connection failed",
+        "details" => $conn->connect_error
+    ]);
+    exit();
+}
+
+/* ==============================
+   SAFE QUERY FUNCTION
+============================== */
+function getSingleValue($conn, $query, $field = "total") {
+    $result = $conn->query($query);
+
+    if (!$result) {
+        echo json_encode([
+            "success" => false,
+            "error" => "Query failed",
+            "details" => $conn->error
+        ]);
+        exit();
+    }
+
+    $row = $result->fetch_assoc();
+    return isset($row[$field]) ? $row[$field] : 0;
 }
 
 /* ==============================
    ACTIVE DRIVES
 ============================== */
-$activeDrives = $conn->query("SELECT COUNT(*) as total FROM Drive WHERE status='OPEN'")
-                     ->fetch_assoc()['total'];
+$activeDrives = getSingleValue(
+    $conn,
+    "SELECT COUNT(*) as total FROM Drive WHERE status='OPEN'"
+);
 
 /* ==============================
    TOTAL APPLICATIONS
 ============================== */
-$applications = $conn->query("SELECT COUNT(*) as total FROM Application")
-                     ->fetch_assoc()['total'];
+$applications = getSingleValue(
+    $conn,
+    "SELECT COUNT(*) as total FROM Application"
+);
 
 /* ==============================
    TOTAL STUDENTS
 ============================== */
-$totalStudents = $conn->query("SELECT COUNT(*) as total FROM Student")
-                      ->fetch_assoc()['total'];
+$totalStudents = getSingleValue(
+    $conn,
+    "SELECT COUNT(*) as total FROM Student"
+);
 
 /* ==============================
    PLACED STUDENTS
 ============================== */
-$placedStudents = $conn->query("SELECT COUNT(*) as total FROM Student WHERE placementStatus='PLACED'")
-                       ->fetch_assoc()['total'];
+$placedStudents = getSingleValue(
+    $conn,
+    "SELECT COUNT(*) as total FROM Student WHERE placementStatus='PLACED'"
+);
 
 $unplacedStudents = $totalStudents - $placedStudents;
 
 /* ==============================
    PLACEMENT %
 ============================== */
-$placementPercentage = $totalStudents > 0 
-    ? round(($placedStudents / $totalStudents) * 100, 2) 
+$placementPercentage = $totalStudents > 0
+    ? round(($placedStudents / $totalStudents) * 100, 2)
     : 0;
 
 /* ==============================
    PACKAGE STATS
 ============================== */
-$packageStats = $conn->query("
+$packageQuery = "
     SELECT 
         IFNULL(MAX(package),0) as highest,
         IFNULL(AVG(package),0) as average
     FROM PlacementRecord
-")->fetch_assoc();
+";
 
-$highestPackage = $packageStats['highest'];
-$averagePackage = round($packageStats['average'], 2);
+$packageResult = $conn->query($packageQuery);
+
+if (!$packageResult) {
+    echo json_encode([
+        "success" => false,
+        "error" => "Package query failed",
+        "details" => $conn->error
+    ]);
+    exit();
+}
+
+$packageStats = $packageResult->fetch_assoc();
+
+$highestPackage = (float)$packageStats['highest'];
+$averagePackage = round((float)$packageStats['average'], 2);
 
 /* ==============================
-   RESPONSE
+   FINAL RESPONSE
 ============================== */
 echo json_encode([
     "success" => true,
@@ -80,9 +138,10 @@ echo json_encode([
     "placedStudents" => (int)$placedStudents,
     "unplacedStudents" => (int)$unplacedStudents,
     "placementPercentage" => $placementPercentage,
-    "highestPackage" => (float)$highestPackage,
-    "averagePackage" => (float)$averagePackage
+    "highestPackage" => $highestPackage,
+    "averagePackage" => $averagePackage
 ]);
 
 $conn->close();
+exit();
 ?>
