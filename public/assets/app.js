@@ -60,6 +60,8 @@ function initDashboard() {
 
   if(role === "STUDENT"){
     menu.innerHTML = `
+
+    <div onclick="chatai()">Chat with PlacementBot</div>
       <div onclick="showStudentDrives()">Drives</div>
       <div onclick="showMyApplications()"> My Applications</div>
       <div onclick="showInterviewSlots()"> My Interviews</div>
@@ -68,7 +70,7 @@ function initDashboard() {
       <div onclick="showStudentProjects()"> Projects</div>
       <div onclick="showStudentEducation()"> Education</div>
       <div onclick="showStudentCertifications()">Certifications</div>
-      <div onclick="chatai()">Chat with PlacementBot</div>
+      
       <div onclick="showJobPosts()">Job Posts By Alumni</div>
       <div 
   onclick="showSkillGapAnalysis()" 
