@@ -1202,24 +1202,30 @@ async function updateApplicationStatus(id, status){
   }
 }
 
-async function showEligibleStudents(){
+async function showEligibleStudents() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("../api/tpo/eligibleStudents.php", {
-    headers: { "Authorization": "Bearer " + token }
+  const res = await fetch("../../api/tpo/getEligibleStudents.php", {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
   });
 
   const data = await res.json();
 
   let html = "<h2>👥 Eligible Students</h2>";
 
-  if(!data.data || data.data.length === 0) {
+  if (!data.data || data.data.length === 0) {
     html += "<p>No eligible students</p>";
     document.getElementById("content").innerHTML = html;
     return;
   }
 
   html += `
+    <button onclick="notifyAll()" class="btn-primary">
+      📧 Notify All Eligible Students
+    </button><br><br>
+
     <div class="table-responsive">
       <table class="data-table">
         <tr>
@@ -1227,7 +1233,6 @@ async function showEligibleStudents(){
           <th>Email</th>
           <th>CGPA</th>
           <th>Backlogs</th>
-          <th>Action</th>
         </tr>
   `;
 
@@ -1238,34 +1243,32 @@ async function showEligibleStudents(){
         <td>${student.email}</td>
         <td>${student.cgpa}</td>
         <td>${student.backlogCount}</td>
-        <td>
-          <button onclick="notifyStudent(${student.userId})" class="btn-small">Notify</button>
-        </td>
       </tr>
     `;
   });
 
   html += "</table></div>";
+
   document.getElementById("content").innerHTML = html;
 }
 
-async function notifyStudent(userId) {
-  const message = prompt("Enter notification message:");
-  if(!message) return;
-
+async function notifyAll() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("../api/tpo/notifyEligibleStudents.php", {
+  const res = await fetch("../../api/tpo/notifyEligible.php", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "Authorization": "Bearer " + token
-    },
-    body: JSON.stringify({studentId: userId, message})
+    }
   });
 
   const data = await res.json();
-  alert(data.message);
+
+  if (data.success) {
+    alert("Emails sent successfully ✅");
+  } else {
+    alert("Error: " + data.message);
+  }
 }
 
 async function showScheduleInterview(){
