@@ -30,7 +30,145 @@
   </div>
 
 </div>
+<!-- ============================= -->
+<!-- STUDENT FAQ CHATBOT -->
+<!-- ============================= -->
 
+<style>
+#pp-chatbot-icon {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  background: #4e73df;
+  color: white;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+#pp-chatbot-window {
+  position: fixed;
+  bottom: 95px;
+  right: 25px;
+  width: 320px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  z-index: 9999;
+}
+
+#pp-chatbot-header {
+  background: #4e73df;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+}
+
+#pp-chatbot-body {
+  padding: 10px;
+  max-height: 350px;
+  overflow-y: auto;
+  background: #f8f9fc;
+}
+
+.pp-bot-msg {
+  background: white;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.pp-option-btn {
+  width: 100%;
+  padding: 7px;
+  margin: 5px 0;
+  background: #e2e6f5;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.pp-option-btn:hover {
+  background: #d1d9f0;
+}
+</style>
+
+<div id="pp-chatbot-icon">Chat</div>
+
+<div id="pp-chatbot-window">
+  <div id="pp-chatbot-header">Placement FAQ Bot</div>
+  <div id="pp-chatbot-body">
+
+    <div class="pp-bot-msg">How can I help you?</div>
+
+    <button class="pp-option-btn" onclick="ppAskBot('interview_date')">Interview Date</button>
+    <button class="pp-option-btn" onclick="ppAskBot('applied_jobs')">Applied Jobs</button>
+    <button class="pp-option-btn" onclick="ppAskBot('application_status')">Application Status</button>
+    <button class="pp-option-btn" onclick="ppAskBot('placement_status')">Placement Status</button>
+    <button class="pp-option-btn" onclick="ppAskBot('active_drives')">Active Drives</button>
+    <button class="pp-option-btn" onclick="ppAskBot('placement_stats')">Placement Statistics</button>
+
+    <div id="pp-bot-response"></div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const role = localStorage.getItem("role");
+  const icon = document.getElementById("pp-chatbot-icon");
+  const windowBox = document.getElementById("pp-chatbot-window");
+
+  if (role === "STUDENT") {
+    icon.style.display = "flex";
+  }
+
+  icon.onclick = function () {
+    windowBox.style.display =
+      windowBox.style.display === "flex" ? "none" : "flex";
+  };
+});
+
+async function ppAskBot(action) {
+
+  const studentId = localStorage.getItem("userId");
+
+  if (!studentId) {
+    alert("Student ID not found.");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "../api/chatbot_api.php?action=" + action + "&studentId=" + studentId
+    );
+
+    const data = await response.json();
+
+    document.getElementById("pp-bot-response").innerHTML +=
+      '<div class="pp-bot-msg">' + data.reply + '</div>';
+
+  } catch (error) {
+    document.getElementById("pp-bot-response").innerHTML +=
+      '<div class="pp-bot-msg">Unable to connect to server.</div>';
+  }
+}
+</script>
 <script src="assets/app.js"></script>
 <script>
   initDashboard();
