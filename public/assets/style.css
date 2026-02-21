@@ -476,3 +476,37 @@ select:focus {
   border-color:#FDBA74;
   box-shadow:0 0 5px rgba(253, 186, 116, 0.3);
 }
+
+.drive-card {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #2a3042;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  transition: 0.3s ease;
+}
+
+.drive-card:hover {
+  transform: translateY(-5px);
+}
+
+.drive-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.drive-image-placeholder {
+  width: 100%;
+  height: 180px;
+  background: #3a4158;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.drive-content {
+  padding: 15px;
+}

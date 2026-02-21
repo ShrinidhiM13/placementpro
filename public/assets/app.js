@@ -69,7 +69,24 @@ function initDashboard() {
       <div onclick="showStudentEducation()"> Education</div>
       <div onclick="showStudentCertifications()">Certifications</div>
       <div onclick="showJobPosts()">Job Posts By Alumni</div>
-      <div onclick="showSkillGapAnalysis()"> Skill Gap</div>
+      <div 
+  onclick="showSkillGapAnalysis()" 
+  style="
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    color:#fff;
+    background:linear-gradient(135deg,#4e73df,#6f42c1);
+    box-shadow:0 0 10px #4e73df, 0 0 20px #6f42c1;
+    transition:0.3s;
+  "
+  onmouseover="this.style.boxShadow='0 0 20px #4e73df, 0 0 40px #6f42c1'"
+  onmouseout="this.style.boxShadow='0 0 10px #4e73df, 0 0 20px #6f42c1'"
+>
+  Skill Gap Analyzer
+</div>
       <div onclick="showGenerateResume()"> Generate Resume</div>
       <div onclick="showNotifications()"> Notifications</div>
       <div onclick="showProfile()"> Profile</div>
@@ -159,7 +176,7 @@ async function showStudentDrives() {
 
   const data = await res.json();
 
-  let html = "<h2> Open Drives</h2>";
+  let html = "<h2>Open Drives</h2>";
 
   if (!data.data || data.data.length === 0) {
     html += "<p>No drives available</p>";
@@ -174,24 +191,41 @@ async function showStudentDrives() {
     const alreadyApplied = drive.isApplied == 1;
 
     html += `
-      <div class="card">
-        <h4>${drive.title}</h4>
-        <p class="secondary">${drive.companyName || 'Company'}</p>
-        <p><strong>Min CGPA:</strong> ${drive.minCgpa}</p>
-        <p><strong>Max Backlogs:</strong> ${drive.maxBacklogs}</p>
-        <p><strong>Status:</strong> 
-          <span class="status-badge status-${drive.status.toLowerCase()}">
-            ${drive.status}
-          </span>
-        </p>
+      <div class="card drive-card">
 
-        <button 
-          onclick="${alreadyApplied ? '' : `applyDrive(${drive.id})`}" 
-          class="btn-primary ${alreadyApplied ? 'btn-disabled' : ''}"
-          ${alreadyApplied ? 'disabled' : ''}
-        >
-          ${alreadyApplied ? 'Already Applied' : 'Apply Now'}
-        </button>
+        ${
+          drive.image
+            ? `<img 
+                 src="/placementpro/${drive.image}" 
+                 class="drive-image"
+                 alt="${drive.title}"
+               />`
+            : `<div class="drive-image-placeholder">
+                 No Image
+               </div>`
+        }
+
+        <div class="drive-content">
+          <h4>${drive.title}</h4>
+          <p class="secondary">${drive.companyName || 'Company'}</p>
+
+          <p><strong>Min CGPA:</strong> ${drive.minCgpa}</p>
+          <p><strong>Max Backlogs:</strong> ${drive.maxBacklogs}</p>
+
+          <p><strong>Status:</strong> 
+            <span class="status-badge status-${drive.status.toLowerCase()}">
+              ${drive.status}
+            </span>
+          </p>
+
+          <button 
+            onclick="${alreadyApplied ? '' : `applyDrive(${drive.id})`}" 
+            class="btn-primary ${alreadyApplied ? 'btn-disabled' : ''}"
+            ${alreadyApplied ? 'disabled' : ''}
+          >
+            ${alreadyApplied ? 'Already Applied' : 'Apply Now'}
+          </button>
+        </div>
 
       </div>
     `;
@@ -199,7 +233,7 @@ async function showStudentDrives() {
 
   html += "</div>";
   document.getElementById("content").innerHTML = html;
-} 
+}
 
 async function applyDrive(id){
   const token = localStorage.getItem("token");

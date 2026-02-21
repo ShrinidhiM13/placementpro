@@ -40,7 +40,7 @@ if ($role === "STUDENT") {
     $studentId = intval($student['id']);
     $studentBranchId = intval($student['branchId']);
 
-    // Filter using DriveBranch table
+    // Filter drives by branch
     $whereCondition .= " AND d.id IN (
         SELECT driveId 
         FROM DriveBranch 
@@ -50,7 +50,7 @@ if ($role === "STUDENT") {
 
 /*
 |--------------------------------------------------------------------------
-| Fetch Drives
+| Fetch Drives (INCLUDING IMAGE)
 |--------------------------------------------------------------------------
 */
 
@@ -62,6 +62,7 @@ SELECT
     d.minCgpa,
     d.maxBacklogs,
     d.status,
+    d.image,
     c.name AS companyName
 FROM Drive d
 JOIN Company c ON d.companyId = c.id
