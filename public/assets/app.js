@@ -68,6 +68,7 @@ function initDashboard() {
       <div onclick="showStudentProjects()"> Projects</div>
       <div onclick="showStudentEducation()"> Education</div>
       <div onclick="showStudentCertifications()">Certifications</div>
+      <div onclick="chatai()">Chat with PlacementBot</div>
       <div onclick="showJobPosts()">Job Posts By Alumni</div>
       <div 
   onclick="showSkillGapAnalysis()" 
@@ -148,7 +149,9 @@ function initDashboard() {
     showTpoDashboard();
   }
 }
-
+function chatai() {
+  window.open("https://placementbot.elitevoyagez.com/", "_blank");
+}
 async function loadUserInfo(){
 
   const token = localStorage.getItem("token");
