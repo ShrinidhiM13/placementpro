@@ -112,13 +112,36 @@ function initDashboard() {
 
   if(role === "TPO"){
     menu.innerHTML = `
-      <div onclick="showTpoDashboard()"> Dashboard</div>
+      
       <div onclick="showCreateDrive()"> Create Drive</div>
       <div onclick="showManageDrives()"> Manage Drives</div>
       <div onclick="showTpoApplications()"> Applications</div>
       <div onclick="showEligibleStudents()"> Eligible Students</div>
       <div onclick="showScheduleInterview()"> Schedule Interviews</div>
-      <div onclick="showPlacementStats()"> Analytics</div>
+      <style>
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 8px #00c6ff, 0 0 16px #0072ff; }
+  50% { box-shadow: 0 0 18px #00c6ff, 0 0 36px #0072ff; }
+  100% { box-shadow: 0 0 8px #00c6ff, 0 0 16px #0072ff; }
+}
+</style>
+
+<div 
+  onclick="window.open('https://analytics-mu-tawny.vercel.app/', '_blank')"
+  style="
+    display:inline-block;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    color:#fff;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+    animation:glowPulse 2s infinite;
+    transition:0.3s;
+  "
+>
+  Analytics
+</div>
       <div onclick="showChangePassword()"> Password</div>
       <div onclick="logout()"> Logout</div>
     `;
