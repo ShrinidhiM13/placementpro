@@ -1,83 +1,269 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PlacementPro - Login</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <title>PlacementPro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    .auth-container {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+    }
+
+    /* NAVBAR */
+    .navbar {
       display: flex;
-      gap: 20px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+    }
+
+    .navbar h2 {
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      font-size: 14px;
+    }
+
+    .navbar ul li {
+      cursor: pointer;
+      opacity: 0.9;
+    }
+
+    .navbar ul li:hover {
+      opacity: 1;
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px;
       flex-wrap: wrap;
+    }
+
+    .hero-left {
+      width: 50%;
+      min-width: 320px;
+    }
+
+    .hero-left h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .hero-left p {
+      font-size: 16px;
+      margin-bottom: 25px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .hero-left button {
+      padding: 12px 25px;
+      border-radius: 25px;
+      border: none;
+      background: white;
+      color: #2563eb;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero-left button:hover {
+      opacity: 0.9;
+    }
+
+    /* LOGIN CARD */
+    .hero-right {
+      width: 40%;
+      min-width: 320px;
+      display: flex;
       justify-content: center;
     }
-    .auth-card {
+
+    .login-card {
+      background: white;
+      color: #1e293b;
       width: 350px;
+      padding: 35px;
+      border-radius: 18px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
     }
+
+    .login-card h3 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      outline: none;
+    }
+
+    .login-card button {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-card button:hover {
+      background: #1e40af;
+    }
+
     .toggle-auth {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 15px;
+      font-size: 13px;
     }
+
     .toggle-auth a {
-      color: #FDBA74;
+      color: #2563eb;
       cursor: pointer;
       text-decoration: underline;
     }
+
+    .demo-box {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media(max-width: 900px){
+      .hero-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-left, .hero-right {
+        width: 100%;
+      }
+
+      .hero-right {
+        margin-top: 40px;
+      }
+    }
+
   </style>
 </head>
-<body class="center">
 
-<div class="auth-container">
-  <!-- Login Form -->
-  <div class="card auth-card" id="loginForm">
-    <h2>PlacementPro</h2>
-    <p class="secondary">Login to your account</p>
+<body>
 
-    <input id="email" placeholder="Email" type="email" required>
-    <input id="password" type="password" placeholder="Password" required>
+<!-- NAVBAR -->
+<div class="navbar">
+  <h1>PlacementPro</h1>
+  <ul>
+   
+  </ul>
+</div>
 
-    <button onclick="login()" class="btn-primary">Login</button>
+<!-- HERO SECTION -->
+<div class="hero-section">
+
+  <!-- LEFT CONTENT -->
+  <div class="hero-left">
+    <h1>Creative Placement Platform</h1>
+    <p>
+      A centralized campus placement ecosystem that connects students,
+      alumni and placement officers with intelligent automation,
+      analytics and real-time dashboards.
+    </p>
+
     
-    <div class="toggle-auth">
-      Don't have an account? <a onclick="showRegister()">Register here</a>
-    </div>
   </div>
 
-  <!-- Register Form -->
-  <div class="card auth-card" id="registerForm" style="display: none;">
-    <h2>Create Account</h2>
-    <p class="secondary">Join PlacementPro</p>
+  <!-- RIGHT LOGIN -->
+  <div class="hero-right">
 
-    <input id="regName" placeholder="Full Name" required>
-    <input id="regEmail" placeholder="Email" type="email" required>
-    <input id="regPassword" type="password" placeholder="Password" required>
-    <input id="regPhone" placeholder="Phone" type="tel" required>
+    <!-- Login Form -->
+    <div class="login-card" id="loginForm">
+      <h3>Login</h3>
 
-    <label>Register as:</label>
-    <select id="regRole" required>
-      <option value="STUDENT">Student</option>
-      <option value="ALUMNI">Alumni</option>
-      <option value="TPO">TPO (Admin)</option>
-    </select>
+      <input id="email" placeholder="Email" type="email">
+      <input id="password" placeholder="Password" type="password">
 
-    <button onclick="register()">Create Account</button>
-    
-    <div class="toggle-auth">
-      Already have an account? <a onclick="showLogin()">Login here</a>
+      <button onclick="login()">Login</button>
+
+      <div class="toggle-auth">
+        Don't have an account? 
+        <a onclick="showRegister()">Register</a>
+      </div>
+
+      <div class="demo-box">
+        <strong>Demo Credentials</strong><br><br>
+        Admin (TPO)<br>
+        admin@gmail.com / admin123<br><br>
+        Student<br>
+        anish@gmail.com / anish123<br><br>
+        Alumni<br>
+        ganesh@gmail.com / ganesh123
+      </div>
     </div>
+
+    <!-- Register Form -->
+    <div class="login-card" id="registerForm" style="display:none;">
+      <h3>Create Account</h3>
+
+      <input id="regName" placeholder="Full Name">
+      <input id="regEmail" placeholder="Email" type="email">
+      <input id="regPassword" placeholder="Password" type="password">
+      <input id="regPhone" placeholder="Phone">
+
+      <select id="regRole">
+        <option value="STUDENT">Student</option>
+        <option value="ALUMNI">Alumni</option>
+        <option value="TPO">TPO</option>
+      </select>
+
+      <button onclick="register()">Create Account</button>
+
+      <div class="toggle-auth">
+        Already have an account? 
+        <a onclick="showLogin()">Login</a>
+      </div>
+    </div>
+
   </div>
+
 </div>
 
 <script src="assets/app.js"></script>
-<script>
-  function showLogin() {
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('registerForm').style.display = 'none';
-  }
 
-  function showRegister() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'block';
-  }
+<script>
+function showLogin() {
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('registerForm').style.display = 'none';
+}
+
+function showRegister() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'block';
+}
 </script>
 
 </body>

@@ -936,35 +936,10 @@ function showSkillGapAnalysis() {
     </div>
   `;
 }
-async function showGenerateResume(){
-  const token = localStorage.getItem("token");
-
-  document.getElementById("content").innerHTML = `
-    <h2> Generate Resume</h2>
-    <div class="card">
-      <p>Click the button below to generate and download your resume as PDF.</p>
-      <button onclick="generatePDF()" class="btn-primary">Download Resume as PDF</button>
-    </div>
-  `;
+async function showGenerateResume() {
+    window.open('/public/resume_builder.php', '_blank');
 }
 
-async function generatePDF() {
-  const token = localStorage.getItem("token");
-
-  const res = await fetch("../api/student/generateResume.php", {
-    headers: { "Authorization": "Bearer " + token }
-  });
-
-  const data = await res.json();
-
-  if(data.success) {
-    const pdfUrl = data.data.pdfUrl || data.message;
-    window.open(pdfUrl, '_blank');
-    alert("Resume generated successfully!");
-  } else {
-    alert("Error: " + data.message);
-  }
-}
 
 async function showNotifications(){
   const token = localStorage.getItem("token");
