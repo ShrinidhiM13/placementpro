@@ -850,7 +850,34 @@ function sendMail(email, jobTitle) {
   window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
 }
 function showSkillGapAnalysis() {
-  window.open("https://google.com", "_blank");
+  const container = document.getElementById("content"); // change if your container id is different
+
+  container.innerHTML = `
+    <div style="
+        width:100%;
+        height:90vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:#f4f6f9;
+        padding:20px;
+        box-sizing:border-box;
+    ">
+        <iframe 
+            src="https://www.resumly.ai/skills-gap-analyzer" 
+            style="
+                width:100%;
+                max-width:1200px;
+                height:100%;
+                border:none;
+                border-radius:12px;
+                box-shadow:0 8px 25px rgba(0,0,0,0.15);
+                background:#fff;
+            "
+            allowfullscreen>
+        </iframe>
+    </div>
+  `;
 }
 async function showGenerateResume(){
   const token = localStorage.getItem("token");
