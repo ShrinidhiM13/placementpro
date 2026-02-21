@@ -1,10 +1,10 @@
 <?php
 
 class Database {
-    private $host = "193.203.184.211";
-    private $db_name = "u508697926_form_db";
-    private $username = "u508697926_shri";
-    private $password = "J+8kAjqP?xDa%Jp";
+    private $host = "";
+    private $db_name = "";
+    private $username = "";
+    private $password = "";
     public $conn;
 
     public function getConnection() {
